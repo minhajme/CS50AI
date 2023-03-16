@@ -1,13 +1,18 @@
-import { new_Variable as newvar, probability as probab } from "bayesian_network.js";
+import { newElement as newvar, probability as probab, and, or, cond } from "bayesian_network.js";
 
 const cloud = newvar('cloud');
 const rain = newvar('rain');
+const hail = newvar('hail');
 
-probab(rain) = 0.2; // probability('rain')
-probab(cloud.and(rain)) = 0.2; // probability('cloud n rain')
-probab(rain.and(cloud)) = 0.2; // probability('rain n cloud')
-probab(rain.or(cloud)) = 0.05; // probability('rain u cloud')
-probab(rain.cond(cloud)) = 0.2; // probability('rain | cloud')
+//probab(rain).val = 0.2;
+//probab(cloud, and, rain).val = 0.2;
+//probab(rain, or, cloud).val = 0.05;
+//probab(rain, cond, cloud).val = 0.2;
+//probab(and(rain, cloud)).val = 0.2;
+//probab(and(rain, cloud), or, hail).val = 0.2;
+//probab(or(and(rain, cloud), hail)).val = 0.2;
+probab([rain, and, cloud], or, hail).val = 0.2;
+probab([[rain, and, cloud], or, hail]).val = 0.2;
 
-console.log(probab(cloud));
-console.log(probab(cloud.cond(rain)));
+console.log(probab(cloud).val);
+console.log(probab(cloud, cond, rain).val);

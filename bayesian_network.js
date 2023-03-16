@@ -1,30 +1,41 @@
 // Bayesian network, which is dependency network of random variables
 
-const var_list = [];
+const elements = [];
+const ands = [];
+const ors = [];
+const conditions = [];
 
-function Variable(name) {
-    this.and = function() {};
-    this.or = function() {};
-    this.cond = function() {};
+
+function ProbabilityElement(name) {
+
 }
 
-function Probability(e) {
+function ProbabilityScenerio(scene_description) {
+    let probability_value = null;
     
+    get val() {
+        return probability_value;
+    }
+    set val(v) {
+        probability_value = v;
+        return this;
+    }
 }
 
-/**
- * get/set probability
- * @param {Variable|string} a
- * @param {number} v
- */
-const set_probability = a, v => {};
-const get_probability = a, v => {};
-const probability = a => {};
 
-const new_Variable = (name) => {
-    const worldVar = new Variable(name);
-    world_vars.append(worldVar);
-    return worldVar;
+const newElement = (name) => {
+    const worldElement = new ProbabilityElement(name);
+    elements.append(worldElement);
+    return worldElement;
 }
 
-export { new_Variable, probability };
+
+function probability() {
+    if (!arguments.length) throw new Error('argument required');
+    if (arguments.length === 1 && typeof arguments[0]==='object') {
+        const scene = new ProbabilityScenerio(arguments[0]);
+        return scene;
+    }
+}
+
+export { newElement, probability };
