@@ -1,18 +1,21 @@
-import { newElement as newvar, probability as probab, and, or, cond } from "bayesian_network.js";
+import { ProbabilityScenerio, and, or, cond }
+from "bayesian_network.js";
+
+const newvar = ProbabilityScenerio;
+const scenerio = ProbabilityScenerio;
 
 const cloud = newvar('cloud');
 const rain = newvar('rain');
-const hail = newvar('hail');
 
-//probab(rain).val = 0.2;
-//probab(cloud, and, rain).val = 0.2;
-//probab(rain, or, cloud).val = 0.05;
-//probab(rain, cond, cloud).val = 0.2;
-//probab(and(rain, cloud)).val = 0.2;
-//probab(and(rain, cloud), or, hail).val = 0.2;
-//probab(or(and(rain, cloud), hail)).val = 0.2;
-probab([rain, and, cloud], or, hail).val = 0.2;
-probab([[rain, and, cloud], or, hail]).val = 0.2;
+CREATE_ELEMENT_IF_NOT_EXISTS = true;
+scenerio('hail').probability = undefined;
 
-console.log(probab(cloud).val);
-console.log(probab(cloud, cond, rain).val);
+scenerio([rain, and, cloud], or, hail).probability = 0.2;
+scenerio([[rain, and, cloud], or, hail]).probability = 0.2;
+scenerio([ [ [rain], and, [cloud] ], or, [hail] ]).probability = 0.2;
+scenerio([ "__or__", "hail", ["__and__", "cloud", "rain"] ]).probability = 0.2;
+scenerio(rain).probability = 0.2;
+scenerio(cloud).probability = 0.2;
+
+console.log(scenerio(hail).probability);
+console.log(scenerio(cloud, cond, rain).probability);
